@@ -1,0 +1,30 @@
+{
+  "name": "nmilot-backend-vertical-slice-architecture",
+  "version": "1.0.0",
+  "description": "Backend app for Vertical Slice Architecture",
+  "main": "src/server.ts",
+  "author": "Nicolas Milot",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./dist/src/index.js",
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "test": "test",
+    "seed": "ts-node seeds/seed.ts"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@types/express": "^4.17.21",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.11.0",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.3",
+    "joi": "^17.12.2",
+    "pg": "^8.11.3",
+    "prisma": "^5.11.0"
+  }
+}

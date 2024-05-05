@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "paths": {
+            "@features/*": ["features/*"],
+            "@domain/*": ["domain/*"],
+            "@lib/*": ["lib/*"]
+        },
+        "target": "es2015",
+        "lib": [
+            "es2019"
+        ],
+        "module": "commonjs",
+        "outDir": "dist",
+        "strict": true,
+        "noImplicitAny": false,
+        "typeRoots": [ "./src/types", "./node_modules/@types", "../node_modules/@types" ],
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "ts-node": {
+        "require": ["tsconfig-paths/register"]
+    }
+}
