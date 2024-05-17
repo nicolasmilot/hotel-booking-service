@@ -1,20 +1,32 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 export interface Exception extends Error {
-  readonly code: number;
+  readonly statusCode: number;
 }
 
-export const HandleRequest = (method: (req: Request<any, any, any, any>, res: Response) => any) => {
-  return (req, res) => {
-    try {
-      method(req, res);
-    } catch (e: any) {
-      console.error(e);
-      if (e.errorCode) {
-        return res.status(e.code).send(e.message);
+export type ExceptionResponse = {
+  errorCode: string;
+  message: string;
+}
+
+const InternalServerErrorResponse = (message: string): ExceptionResponse => {
+  return {
+    errorCode: "INTERNAL_SERVER_ERROR",
+    message
+  };
+}
+
+export const HandleRequest = (method: (req, res, next) => any) => {
+  return (req, res, next) => {
+    return method(req, res, next).catch(e => {
+      if (e.statusCode) {
+        return res.status(e.statusCode).json({
+          errorCode: e.name,
+          message: e.message
+        });
       } else {
-        return res.status(500).send("INTERNAL_SERVER_ERROR");
+        return res.status(500).json(InternalServerErrorResponse(e.message));
       }
-    }
+    });
   }
 }

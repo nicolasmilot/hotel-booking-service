@@ -10,10 +10,36 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
-// model User {
-//   id          Int      @id @default(autoincrement())
-//   email       String   @unique
-//   firstName  String
-//   lastName   String
-//   avatarUrl  String?
-// }
+model HotelRoom {
+  id         String @id @default(uuid())
+  name       String
+  roomNumber Int
+
+  availabilities Availability[]
+  bookings       Booking[]
+}
+
+model Availability {
+  id   String   @id @default(uuid())
+  date DateTime
+
+  hotelRoom   HotelRoom? @relation(fields: [hotelRoomId], references: [id])
+  hotelRoomId String?
+
+  booking   Booking? @relation(fields: [bookingId], references: [id])
+  bookingId String?
+
+  @@unique([hotelRoomId, date])
+}
+
+model Booking {
+  id String @id @default(uuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  availabilities Availability[]
+
+  hotelRoom   HotelRoom @relation(fields: [hotelRoomId], references: [id])
+  hotelRoomId String
+}

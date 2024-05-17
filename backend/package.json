@@ -5,16 +5,24 @@
   "main": "src/server.ts",
   "author": "Nicolas Milot",
   "license": "MIT",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
     "start": "node ./dist/src/index.js",
     "dev": "nodemon --exec ts-node src/server.ts",
-    "test": "test",
+    "test": "NODE_ENV=test jest --runInBand",
     "seed": "ts-node seeds/seed.ts"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.0",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.2"
@@ -25,6 +33,7 @@
     "express": "^4.18.3",
     "joi": "^17.12.2",
     "pg": "^8.11.3",
-    "prisma": "^5.11.0"
+    "prisma": "^5.11.0",
+    "uuid": "^9.0.1"
   }
 }

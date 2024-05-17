@@ -1,21 +1,23 @@
 import { PrismaClient } from "@prisma/client";
 import { faker } from "@faker-js/faker";
+import { v4 as uuid } from "uuid";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  return Promise.all([...Array(25)].map(i => {
-    const firstName = faker.person.firstName();
-    const lastName = faker.person.lastName();
-    return prisma.user.create({
+  let roomNumberIncrement = 1;
+  return Promise.all([...Array(30)].map(i => {
+    const hotelRoom = prisma.hotelRoom.create({
       data: {
-        id: i,
-        email: faker.internet.email({ firstName, lastName }),
-        firstName,
-        lastName,
-        avatarUrl: "https://picsum.photos/200/300",
+        id: uuid(),
+        name: faker.commerce.productName(),
+        roomNumber: roomNumberIncrement + 100
       },
     });
+
+    roomNumberIncrement++;
+
+    return hotelRoom;
   }));
 }
 
@@ -28,5 +30,4 @@ main()
     console.error(e);
     await prisma.$disconnect();
     process.exit(1);
-
-  })
+  });
